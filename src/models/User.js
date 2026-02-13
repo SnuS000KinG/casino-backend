@@ -1,18 +1,19 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-
- const PlayerSchema = new mongoose.Schema({
-    id: mongoose.Schema.Types.ObjectId,
-    nickname: String,
-    email: String
- });
+    // на удаление 
+//  const PlayerSchema = new mongoose.Schema({
+//     id: mongoose.Schema.Types.ObjectId,
+//     nickname: String,
+//     email: String
+//  });
 
 const UserSchema = new mongoose.Schema({
-        firebaseUID:{
-            type: String,
-            unique: true,
-            sparse: true,
-        },
+    // на удаление 
+        // firebaseUID:{
+        //     type: String,
+        //     unique: true,
+        //     sparse: true, 
+        // },
         
         nickname: {
             type: String, 
@@ -25,6 +26,7 @@ const UserSchema = new mongoose.Schema({
             required: true
         },
         emailVerified:{
+            type: Boolean,
             default: false
         },
         verificationToken:{
@@ -38,7 +40,7 @@ const UserSchema = new mongoose.Schema({
             type: [String],
             default: []
         },
-        Player: [PlayerSchema],
+        // Player: [PlayerSchema],
         admin:{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
@@ -50,13 +52,18 @@ const UserSchema = new mongoose.Schema({
         adminEmail:{
             type: String,
         },
-       sessionTokenVersion: {
-        type: Number,
-        default: 0
-       },
+        //не знаю нужно ли оставлять 
+    //    sessionTokenVersion: {??????
+    //     type: Number,?????? 
+    //     default: 0?????
+    //    },?????
        registrationDate: {
         type: Date,
         default: Date.now
+       },
+       wallet:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Wallet"
        }
     });
 
