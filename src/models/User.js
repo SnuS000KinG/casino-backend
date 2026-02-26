@@ -13,29 +13,29 @@ const UserSchema = new mongoose.Schema({
             unique: true,
             required: true
         },
-        // emailVerified:{
-        //     type: Boolean,
-        //     default: false
-        // },
-        // verificationToken:{
-        //     type: String
-        // },
+        emailVerified:{
+            type: Boolean,
+            default: true
+        },
+        verificationToken:{
+            type: String
+        },
         password:{
             type: String,
-            // required: CSSViewTransitionRule
+            required: true
         },
-        // roles:{
-        //     type: [String],
-        //     default: []
-        // },
+        roles:{
+            type: [String],
+            default: []
+        },
         // avatar: {
         //     data: Buffer,
         //     contentType: String
         // },
-    //    sessionTokenVersion: {
-    //     type: Number,
-    //     default: 0
-    //    },
+       sessionTokenVersion: {
+        type: Number,
+        default: 0
+       },
     //    registrationDate: {
     //     type: Date,
     //     default: Date.now
@@ -46,18 +46,18 @@ const UserSchema = new mongoose.Schema({
     //    }
     });
 
-// UserSchema.pre('save', async function (next){
-//     if (!this.isModified('password')){
-//         return next();
-//     }
-//     const salt = await bcrypt.genSalt(10);
-//     this.password = await bcrypt.hash(this.password, salt);
-//     next();
-// });
+UserSchema.pre('save', async function (next){
+    if (!this.isModified('password')){
+        return;
+    }
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    
+});
 
-// UserSchema.methods.comparePassword = async function (password){
-//     return await bcrypt.compare(password, this.password);
-// };
+    UserSchema.methods.comparePassword = async function (password){
+        return await bcrypt.compare(password, this.password);
+    };
 
 module.exports = mongoose.model('User', UserSchema);
 

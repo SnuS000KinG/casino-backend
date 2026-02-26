@@ -5,10 +5,10 @@ const WalletSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    currency:{
-        type: String,
-        default: "Zl"
-    }
+    // currency:{
+    //     type: String,
+    //     default: "Zl"
+    // }
 });
 
 module.exports = mongoose.model('Wallet', WalletSchema);
