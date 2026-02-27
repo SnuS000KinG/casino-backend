@@ -36,14 +36,15 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: 0
        },
-    //    registrationDate: {
-    //     type: Date,
-    //     default: Date.now
-    //    },
-    //    wallet:{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Wallet"
-    //    }
+       registrationDate: {
+        type: Date,
+        default: Date.now
+       },
+       wallet:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Wallet",
+        default: null
+       }
     });
 
 UserSchema.pre('save', async function (next){

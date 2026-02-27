@@ -2,6 +2,7 @@ const jwt= require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { randomBytes, randomUUID } = require('crypto'); 
 const User = require('../models/User'); 
+const Wallet = require('../models/Wallet');
 
 //generacja tokenu
 const generateAccessToken = (id, roles, sessionTokenVersion)=>{
@@ -18,6 +19,7 @@ const register = async (req, res) => {
     }
 
     const verificationToken = randomUUID();
+
     const user = new User({
         nickname, 
         email: email.toLowerCase(),
@@ -26,7 +28,15 @@ const register = async (req, res) => {
         verificationToken
     });
     await user.save();
+    
+    //создание кошелька
+    const wallet = new Wallet({ user: user._id, balance: 0 });
+    await wallet.save();
+    // console.log("Кошелек создан:", wallet._id);
 
+    user.wallet = wallet._id;
+    await user.save();
+    // console.log("Юзер обновлен с кошельком:", user.wallet);
 
     res.status(201).json({ msg: ('user created') });
 };
@@ -36,8 +46,15 @@ const login = async (req, res) => {
         const { email, password } = req.body;
 
     const user = await User.findOne({email: email.toLowerCase()});
+    //проверка существования юзера
+    if(!user){
+        return res.status(404).json({msg: 'error :('});
+    }
+
     const isPasswordMatch = await bcrypt.compare(password, user.password);
-    if (!isPasswordMatch) return res.status(400);
+    if (!isPasswordMatch){ 
+        return res.status(400).json({msg: 'error 404 :('});
+    }
     // if(!user || !(await user.comparePassward(password))) {
     //     return res.status(400).json({msg: 'error400'});
     // }
@@ -56,6 +73,7 @@ const login = async (req, res) => {
         user:{
             id: user._id, // Внутренний ID для приватных запросов
             // uuid: user.uuid, // public id dla url
+            // balance: user.wallet.balance,
             roles: user.roles,
         }
     })
