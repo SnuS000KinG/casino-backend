@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const UserV2 = require('../models/User'); // <--- ВАЖНО: ссылаемся на  модель
 
 module.exports = async function (req, res, next) {
+
     if (req.method === "OPTIONS") {
         return next();
     }
