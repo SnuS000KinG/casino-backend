@@ -48,7 +48,7 @@ Dice (5 Dice)    POST
 {
     "bet": 100,
     "guessEven": true,
-    "guessSum": "<= 17",
+    "guessSum": "<= 17", ">17"
     "guessCombo": 3
     
 }
@@ -58,6 +58,6 @@ Dice (more less)
 
 {
     "bet": 100,
-    "diceBid": "7"
+    "diceBid": "7" "2-6" "8-12"
 }
 
