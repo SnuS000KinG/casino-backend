@@ -22,6 +22,16 @@ router.post(
     '/topUp',
     authMiddleware,
     userController.TopUpBalance
+);
+router.post(
+    '/withdrawal',
+    authMiddleware,
+    userController.withdrawalFunds
+);
+router.get(
+    '/history',
+    authMiddleware,
+    userController.getMyHistory
 )
 
 module.exports = (router);

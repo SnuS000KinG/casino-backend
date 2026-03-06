@@ -44,6 +44,10 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Wallet",
         default: null
+       },
+       transaction:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Transaction",
        }
     });
 
